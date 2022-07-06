@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context = "http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans.xsd
+          http://www.springframework.org/schema/context
+          http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--This is used for annotation based configuration-->
+    <context:component-scan base-package="org.example.models"/>
+
+    <!--This is used for xml based configuration-->
+    <bean id="teacher" class="org.example.models.Teacher"/>
+
+    <!--DI - Property Injection-->
+    <bean id="teacher1" class="org.example.models.Teacher">
+        <property name="id" value="1"/>
+        <property name="name" value="Jhon"/>
+        <property name="subject" value="Maths"/>
+    </bean>
+
+  <!--  DI - Constructor Injection-->
+    <bean id="teacher2" class="org.example.models.Teacher">
+        <constructor-arg name="id" value="2"/>
+        <constructor-arg name="name" value="Peter"/>
+        <constructor-arg name="subject" value="Science"/>
+        <constructor-arg name="teacherAddress" ref="defaultAddress"/>
+
+    </bean>
+
+    <bean id="defaultAddress" class="org.example.models.Address" scope="">
+        <property name="no" value="1/20"/>
+        <property name="city" value="Matara"/>
+        <property name="province" value="Southern"/>
+        <property name="Country" value="Sri Lanka"/>
+    </bean>
+
+    <bean id="teacherAddress" class="org.example.models.Address" scope="">
+        <property name="no" value="2/20"/>
+        <property name="city" value="Colombo"/>
+        <property name="province" value="Western"/>
+        <property name="Country" value="Sri Lanka"/>
+    </bean>
+
+    <!--get the object from factory method-->
+    <bean id="cat" class="org.example.models.factory.method.models.Cat" factory-method="getCat"/>
+
+    <!--get the object from factory method-->
+    <bean id="printer" class="org.example.models.factory.method.models.PrintableFactory" factory-method="getPrintable"/>
+
+    <!--get the object from factory method-->
+    <bean id="pfactory" class="org.example.models.factory.method.models.PrintableFactory"/>
+    <bean id="nonStaticPrinter" class="org.example.models.factory.method.models.PrintableFactory"
+          factory-method="getNonStaticPrintable"
+          factory-bean="pfactory"/>
+
+
+</beans>
